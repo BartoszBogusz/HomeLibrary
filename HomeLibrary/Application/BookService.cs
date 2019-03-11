@@ -1,6 +1,7 @@
 ﻿using HomeLibrary.Entities;
 using HomeLibrary.Infrastructure;
 using HomeLibrary.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -9,7 +10,7 @@ namespace HomeLibrary.Application
     public interface IBookService
     {
         void Create(CreateBookViewModel model);
-        List<ReadBookViewModel> Get(string sortOrder);
+        List<ReadBookViewModel> Get(string sortOrder, string searchString);
         EditBookViewModel Get(int bookId);
         void Update(EditBookViewModel model);
         void Delete(int bookId);
@@ -38,7 +39,7 @@ namespace HomeLibrary.Application
             _context.SaveChanges();               
         }
 
-        public List<ReadBookViewModel> Get(string sortOrder)
+        public List<ReadBookViewModel> Get(string sortOrder, string searchString)
         {
             var list = _context.Books
                 .Select(x => new ReadBookViewModel
@@ -50,6 +51,11 @@ namespace HomeLibrary.Application
                     Year = x.Year
                 });
 
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                list = list.Where(x => x.Title.Contains(searchString) || x.AuthorLastName.Contains(searchString));
+            }
+      
             switch (sortOrder)
             {
                 case "title_desc":

@@ -16,12 +16,13 @@ namespace HomeLibrary.Controllers
             _bookService = bookService;
         }
 
-        public IActionResult Index(string sortOrder)
+        public IActionResult Index(string sortOrder, string searchString)
         {
             ViewData["TitleSortParm"] = String.IsNullOrEmpty(sortOrder) ? "title_desc" : "";
             ViewData["NameSortParm"] = sortOrder == "Name" ? "name_desc" : "Name";
+            ViewData["CurrentFilter"] = searchString;
 
-            var list = _bookService.Get(sortOrder);
+            var list = _bookService.Get(sortOrder, searchString);
             return View(list);
         }
 
