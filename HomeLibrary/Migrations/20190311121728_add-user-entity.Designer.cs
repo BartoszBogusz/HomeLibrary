@@ -3,14 +3,16 @@ using System;
 using HomeLibrary.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace HomeLibrary.Migrations
 {
     [DbContext(typeof(HomeLibraryContext))]
-    partial class HomeLibraryContextModelSnapshot : ModelSnapshot
+    [Migration("20190311121728_add-user-entity")]
+    partial class adduserentity
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

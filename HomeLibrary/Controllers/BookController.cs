@@ -1,9 +1,11 @@
 ﻿using HomeLibrary.Application;
 using HomeLibrary.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HomeLibrary.Controllers
 {
+    [Authorize]
     public class BookController : Controller
     {
         private readonly IBookService _bookService;

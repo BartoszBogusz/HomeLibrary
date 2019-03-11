@@ -1,8 +1,10 @@
 ﻿using HomeLibrary.Application;
+using HomeLibrary.Entities;
 using HomeLibrary.Infrastructure;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -35,6 +37,10 @@ namespace HomeLibrary
 
             services.AddDbContext<HomeLibraryContext>(options =>
                 options.UseMySql("Server=localhost;Database=HomeLibrary;User Id=root; Password=admin;"));
+
+            services.AddDefaultIdentity<User>()
+                .AddEntityFrameworkStores<HomeLibraryContext>()
+                .AddDefaultUI();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -54,6 +60,7 @@ namespace HomeLibrary
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseCookiePolicy();
+            app.UseAuthentication();
 
             app.UseMvc(routes =>
             {

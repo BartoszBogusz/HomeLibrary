@@ -1,14 +1,16 @@
 ﻿using HomeLibrary.Entities;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace HomeLibrary.Infrastructure
 {
-    public class HomeLibraryContext : DbContext
+    public class HomeLibraryContext : IdentityDbContext
     {
-        public HomeLibraryContext(DbContextOptions options) : base(options)
+        public HomeLibraryContext(DbContextOptions<HomeLibraryContext> options) : base(options)
         {
         }
 
+        public DbSet<User> Users { get; set; }
         public DbSet<Book> Books { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
