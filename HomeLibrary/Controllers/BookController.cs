@@ -1,4 +1,5 @@
 ﻿using HomeLibrary.Application;
+using HomeLibrary.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HomeLibrary.Controllers
@@ -16,6 +17,18 @@ namespace HomeLibrary.Controllers
         {
             var list = _bookService.Get();
             return View(list);
+        }
+
+        public IActionResult Create()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult Create(CreateBookViewModel model)
+        {
+            _bookService.Create(model);
+            return RedirectToAction("Index");
         }
     }
 }

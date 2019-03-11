@@ -1,4 +1,5 @@
-﻿using HomeLibrary.Infrastructure;
+﻿using HomeLibrary.Entities;
+using HomeLibrary.Infrastructure;
 using HomeLibrary.Models;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,6 +8,7 @@ namespace HomeLibrary.Application
 {
     public interface IBookService
     {
+        void Create(CreateBookViewModel model);
         List<ReadBookViewModel> Get();
     }
 
@@ -17,6 +19,20 @@ namespace HomeLibrary.Application
         public BookService(HomeLibraryContext context)
         {
             _context = context;
+        }
+
+        public void Create(CreateBookViewModel model)
+        {
+            var newBook = new Book
+            {
+                Title = model.Title,
+                AuthorFirstName = model.AuthorFirstName,
+                AuthorLastName = model.AuthorLastName,
+                Year = model.Year
+            };
+
+            _context.Add(newBook);
+            _context.SaveChanges();               
         }
 
         public List<ReadBookViewModel> Get()
