@@ -10,6 +10,8 @@ namespace HomeLibrary.Application
     {
         void Create(CreateBookViewModel model);
         List<ReadBookViewModel> Get();
+        EditBookViewModel Get(int bookId);
+        void Update(EditBookViewModel model);
     }
 
     public class BookService : IBookService
@@ -40,6 +42,7 @@ namespace HomeLibrary.Application
             var list = _context.Books
                 .Select(x => new ReadBookViewModel
                 {
+                    BookId = x.BookId,
                     Title = x.Title,
                     AuthorFirstName = x.AuthorFirstName,
                     AuthorLastName = x.AuthorLastName,
@@ -47,6 +50,34 @@ namespace HomeLibrary.Application
                 }).ToList();
 
             return list;
+        }
+
+        public EditBookViewModel Get(int bookId)
+        {
+            var dbBook = _context.Books
+                .Where(x => x.BookId == bookId)
+                .Select(x => new EditBookViewModel
+                {
+                    Title = x.Title,
+                    AuthorFirstName = x.AuthorFirstName,
+                    AuthorLastName = x.AuthorLastName,
+                    Year = x.Year
+                }).First();
+
+            return dbBook;
+        }
+
+        public void Update(EditBookViewModel model)
+        {
+            var book = _context.Books
+                .First(x => x.BookId == model.BookId);
+
+            book.Title = model.Title;
+            book.AuthorFirstName = model.AuthorFirstName;
+            book.AuthorLastName = model.AuthorLastName;
+            book.Year = model.Year;
+
+            _context.SaveChanges();
         }
     }
 }

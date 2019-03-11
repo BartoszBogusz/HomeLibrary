@@ -1,6 +1,6 @@
 ﻿namespace HomeLibrary.Models
 {
-    public class ReadBookViewModel
+    public class EditBookViewModel
     {
         public int BookId { get; set; }
         public string Title { get; set; }

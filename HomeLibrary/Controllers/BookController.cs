@@ -30,5 +30,18 @@ namespace HomeLibrary.Controllers
             _bookService.Create(model);
             return RedirectToAction("Index");
         }
+
+        public IActionResult Edit(int bookId)
+        {
+            var book = _bookService.Get(bookId);
+            return View(book);
+        }
+
+        [HttpPost]
+        public IActionResult Edit(EditBookViewModel model)
+        {
+            _bookService.Update(model);
+            return RedirectToAction("Index");
+        }
     }
 }
