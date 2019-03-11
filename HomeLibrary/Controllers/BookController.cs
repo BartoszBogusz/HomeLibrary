@@ -2,6 +2,7 @@
 using HomeLibrary.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System;
 
 namespace HomeLibrary.Controllers
 {
@@ -15,9 +16,12 @@ namespace HomeLibrary.Controllers
             _bookService = bookService;
         }
 
-        public IActionResult Index()
+        public IActionResult Index(string sortOrder)
         {
-            var list = _bookService.Get();
+            ViewData["TitleSortParm"] = String.IsNullOrEmpty(sortOrder) ? "title_desc" : "";
+            ViewData["NameSortParm"] = sortOrder == "Name" ? "name_desc" : "Name";
+
+            var list = _bookService.Get(sortOrder);
             return View(list);
         }
 

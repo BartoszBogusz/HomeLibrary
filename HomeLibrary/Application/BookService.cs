@@ -9,7 +9,7 @@ namespace HomeLibrary.Application
     public interface IBookService
     {
         void Create(CreateBookViewModel model);
-        List<ReadBookViewModel> Get();
+        List<ReadBookViewModel> Get(string sortOrder);
         EditBookViewModel Get(int bookId);
         void Update(EditBookViewModel model);
         void Delete(int bookId);
@@ -38,7 +38,7 @@ namespace HomeLibrary.Application
             _context.SaveChanges();               
         }
 
-        public List<ReadBookViewModel> Get()
+        public List<ReadBookViewModel> Get(string sortOrder)
         {
             var list = _context.Books
                 .Select(x => new ReadBookViewModel
@@ -48,9 +48,25 @@ namespace HomeLibrary.Application
                     AuthorFirstName = x.AuthorFirstName,
                     AuthorLastName = x.AuthorLastName,
                     Year = x.Year
-                }).ToList();
+                });
 
-            return list;
+            switch (sortOrder)
+            {
+                case "title_desc":
+                    list = list.OrderByDescending(s => s.Title);
+                    break;
+                case "Name":
+                    list = list.OrderBy(s => s.AuthorLastName);
+                    break;
+                case "name_desc":
+                    list = list.OrderByDescending(s => s.AuthorLastName);
+                    break;
+                default:
+                    list = list.OrderBy(x => x.Title);
+                    break;
+            }
+
+            return list.ToList();
         }
 
         public EditBookViewModel Get(int bookId)
