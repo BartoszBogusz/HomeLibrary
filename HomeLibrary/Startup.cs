@@ -1,4 +1,5 @@
-﻿using HomeLibrary.Infrastructure;
+﻿using HomeLibrary.Application;
+using HomeLibrary.Infrastructure;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -28,6 +29,7 @@ namespace HomeLibrary
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
+            services.AddTransient<IBookService, BookService>();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
@@ -57,7 +59,7 @@ namespace HomeLibrary
             {
                 routes.MapRoute(
                     name: "default",
-                    template: "{controller=Home}/{action=Index}/{id?}");
+                    template: "{controller=Book}/{action=Index}/{id?}");
             });
         }
     }
