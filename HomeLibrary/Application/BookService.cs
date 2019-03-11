@@ -12,6 +12,7 @@ namespace HomeLibrary.Application
         List<ReadBookViewModel> Get();
         EditBookViewModel Get(int bookId);
         void Update(EditBookViewModel model);
+        void Delete(int bookId);
     }
 
     public class BookService : IBookService
@@ -77,6 +78,16 @@ namespace HomeLibrary.Application
             book.AuthorLastName = model.AuthorLastName;
             book.Year = model.Year;
 
+            _context.SaveChanges();
+        }
+
+        public void Delete(int bookId)
+        {
+            var item = _context.Books
+                .Where(x => x.BookId == bookId)
+                .First();
+
+            _context.Remove(item);
             _context.SaveChanges();
         }
     }

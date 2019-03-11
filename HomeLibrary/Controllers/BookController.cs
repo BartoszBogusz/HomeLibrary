@@ -43,5 +43,11 @@ namespace HomeLibrary.Controllers
             _bookService.Update(model);
             return RedirectToAction("Index");
         }
+
+        public IActionResult Delete(int bookId)
+        {
+            _bookService.Delete(bookId);
+            return RedirectToAction("Index");
+        }
     }
 }
