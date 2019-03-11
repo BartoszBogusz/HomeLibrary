@@ -19,6 +19,12 @@ namespace HomeLibrary.Controllers
             return View(list);
         }
 
+        public IActionResult Details(int bookId)
+        {
+            var book = _bookService.Get(bookId);
+            return View(book);
+        }
+
         public IActionResult Create()
         {
             return View();
